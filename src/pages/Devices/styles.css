@@ -1,0 +1,130 @@
+.body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.border {
+    flex: 1;
+    display: flex;
+}
+
+.content {
+    flex: 10;
+    display: flex;
+    flex-direction: inherit;
+    justify-content: center;
+    align-items: center;
+}
+
+.content .devices {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 80%;
+    gap: 10px;
+    margin-top: 1vh;
+}
+
+.device {
+    flex: 0 1 150px;
+    height: 200px;
+    width: 100px;
+    background-color: inherit;
+    border: 1px solid var(--text-color);
+    border-radius: 20px;
+    margin: 1vh 1vh 1vh 1vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.device:hover {
+    background-color: var(--text-color);
+    color: var(--background-color);
+}
+
+.device .icon {
+    flex: 4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.device .icon span {
+    font-size: 50px
+}
+
+.device .name {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 80%;
+}
+
+.device .name #type {
+    color: grey;
+}
+
+.device .name p {
+    margin-block: 0em;
+}
+
+.footer {
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: grey;
+}
+
+.footer p,
+a {
+    margin-block: 0em;
+    color: inherit;
+    font-size: 15px;
+}
+
+@media only screen and (max-width: 1000px) {
+    .content input[type=text] {
+        width: 50%;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+
+    .content {
+        flex: 12;
+    }
+
+    .content input[type=text] {
+        width: 60%;
+    }
+
+    .content button {
+        font-size: 15px;
+    }
+
+}
+
+@media only screen and (max-width: 500px) {
+
+    .content {
+        flex: 14;
+    }
+
+    .content input[type=text] {
+        width: 80%;
+    }
+
+    .content button {
+        font-size: 13px;
+    }
+
+}
