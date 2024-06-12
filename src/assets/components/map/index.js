@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
+import { getDevice } from '../../db';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoidmlzaGFsZHMiLCJhIjoiY2x1YXRrdnpzMGw5aDJucWs4enpkamdsZCJ9.eCkROwVcGTpatN-PKhQ86w';
 
@@ -9,12 +10,16 @@ export default function Map() {
 
     useEffect(() => {
         if (map.current) return; // initialize map only once
-        map.current = new mapboxgl.Map({
-            container: mapContainer.current,
-            style: 'mapbox://styles/mapbox/dark-v11',
-            center: [-74.5, 40],
-            zoom: 9
-        });
+
+        try {
+            const { coords } = getDevice();
+            map.current = new mapboxgl.Map({
+                container: mapContainer.current,
+                style: 'mapbox://styles/mapbox/dark-v11',
+                center: [coords.latitude, coords.longitude],
+                zoom: 12
+            });
+        } catch { return; }
 
         const themeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
         const changeTheme = (e) => {

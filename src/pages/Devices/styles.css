@@ -54,10 +54,6 @@
     align-items: center;
 }
 
-.device .icon span {
-    font-size: 50px
-}
-
 .device .name {
     flex: 3;
     display: flex;

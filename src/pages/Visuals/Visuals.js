@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { hasAccount } from '../../assets/db';
 import Map from '../../assets/components/map'
 import Loader from '../../assets/components/loader'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -10,6 +12,13 @@ const Visuals = () => {
 
     const [status, setStatus] = useState({ message: '', icon: <Loader /> });
     const [popClass, setPop] = useState('')
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if(!hasAccount()) navigate('/account')
+            
+        
+    }, [])
 
     const toast = (message = '', icon = 'working') => {
         const icons = {
