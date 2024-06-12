@@ -1,10 +1,11 @@
 import React, { useRef, useEffect } from 'react';
 import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
 import { getDevice } from '../../db';
+import { getRoutes } from '../../api';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoidmlzaGFsZHMiLCJhIjoiY2x1YXRrdnpzMGw5aDJucWs4enpkamdsZCJ9.eCkROwVcGTpatN-PKhQ86w';
 
-export default function Map() {
+export default function Map({ date }) {
     const mapContainer = useRef(null);
     const map = useRef(null);
 
@@ -30,6 +31,12 @@ export default function Map() {
         themeMediaQuery.addEventListener('change', changeTheme);
         return () => themeMediaQuery.removeEventListener('change', changeTheme);
     }, []);
+
+    useEffect(() => {
+        if (date.from && date.to) {
+           getRoutes(date)
+        }
+    }, [date.from, date.to])
 
     return (
         <div ref={mapContainer} className="map" />
