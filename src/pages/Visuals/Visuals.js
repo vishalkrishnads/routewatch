@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { hasAccount } from '../../assets/db';
 import Map from '../../assets/components/map'
 import Loader from '../../assets/components/loader'
@@ -8,16 +8,44 @@ import ErrorIcon from '@mui/icons-material/Error';
 import WarningIcon from '@mui/icons-material/Warning';
 import './styles.css';
 
+const DatePicker = ({ position, onSelect, date }) => {
+    const [selectedDate, setSelectedDate] = useState('');
+
+    const handleDateChange = (event) => {
+        const newDateValue = event.target.value;
+
+        setSelectedDate(newDateValue.split('T')[0]);
+
+        if (newDateValue) {
+            const dateUTCString = new Date(newDateValue).getTime();
+            onSelect(position === 'from' ? { ...date, from: dateUTCString } : { ...date, to: dateUTCString });
+        } else {
+            onSelect(position === 'from' ? { ...date, from: null } : { ...date, to: null });
+        }
+    };
+
+    return (
+        <div className={`date ${position}`}>
+            <p>{position}</p>
+            <input
+                className="value"
+                type="date"
+                value={selectedDate} // Controlled component
+                onChange={handleDateChange} // Handle date changes
+            />
+        </div>
+    );
+};
+
 const Visuals = () => {
 
     const [status, setStatus] = useState({ message: '', icon: <Loader /> });
     const [popClass, setPop] = useState('')
+    const [date, setDate] = useState({ from: null, to: null })
     const navigate = useNavigate();
 
     useEffect(() => {
-        if(!hasAccount()) navigate('/account')
-            
-        
+        if (!hasAccount()) navigate('/account')
     }, [])
 
     const toast = (message = '', icon = 'working') => {
@@ -45,10 +73,10 @@ const Visuals = () => {
         }
 
         show();
-    }
+    }    
 
     return <div style={{ flex: 1 }}>
-        <Map />
+        <Map date={date} />
         <div id="toast" style={{ display: popClass ? 'flex' : 'none' }} className={`status ${popClass}`}>
             <div className='icon'>{status.icon}</div>
             <div className="text">{status.message}</div>
@@ -56,14 +84,8 @@ const Visuals = () => {
         <div className="controls">
             <div className="top">
                 <div className="border"></div>
-                <div className="date from">
-                    <p>from</p>
-                    <input className="value" id="from" type="date" />
-                </div>
-                <div className="date to">
-                    <p>to</p>
-                    <input className="value" id="to" type="date" />
-                </div>
+                <DatePicker key={0} position={'from'} onSelect={setDate} date={date} />
+                <DatePicker key={1} position={'to'} onSelect={setDate} date={date} />
                 <div className="border"></div>
             </div>
             <div className="bottom">

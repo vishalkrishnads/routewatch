@@ -24,7 +24,6 @@ const Devices = () => {
             'app': <AndroidIcon fontSize="large" />
         }
         return <div onClick={() => {
-            console.log(coords)
             setDevice({ id, coords })
             navigate('/')
         }} class="device">
