@@ -1,12 +1,24 @@
 import { drives } from '@commaai/api';
 import { getDevice } from '../db';
+import { get } from './network';
+import { annotateCoords, parseEvents } from './utils';
+
+function getEvents(url, index) {
+    return get(`${url}/${index}/events.json`)
+}
+
+function getCoords(url, index) {
+    return get(`${url}/${index}/coords.json`)
+}
 
 export function getRoutes(date) {
 
     const { id } = getDevice();
 
     drives.getRoutesSegments(id, date.from, date.to)
-        .then(segments => {
+        .then(async (segments) => {
+
+            if (segments == []) return []
 
             // fix up the routes
             // taken straight from comma connect
@@ -31,10 +43,31 @@ export function getRoutes(date) {
                 };
             });
 
-            for (const route of routes) {
-                fetch(`${route.url}/0/coords.json`)
-                    .then(res => res.json())
-                    .then(res => console.log(res))
-            }
+            const coords = routes.map(async (route) => {
+                let driveEvents, coords;
+                const eventPromises = [], coordsPromises = [];
+
+                for (let i = 0; i <= route.maxqlog; i++) {
+                    eventPromises.push((async (j) => {
+                        return await getEvents(route.url, j);
+                    })(i));
+                    coordsPromises.push((async (j) => {
+                        return await getCoords(route.url, j);
+                    })(i));
+                }
+
+                try {
+                    driveEvents = [].concat(...(await Promise.all(eventPromises)));
+                    coords = (await Promise.all(coordsPromises)).flat();
+                } catch (err) {
+                    console.error(err);
+                    return [];
+                }
+
+                driveEvents = parseEvents(route, driveEvents).filter(event => event.type === 'engage');
+                return annotateCoords(coords, driveEvents);
+            })
+
+            return await Promise.all(coords);
         })
 }

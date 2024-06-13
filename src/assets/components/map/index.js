@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
 import { getDevice } from '../../db';
 import { getRoutes } from '../../api';
@@ -6,8 +6,10 @@ import { getRoutes } from '../../api';
 mapboxgl.accessToken = 'pk.eyJ1IjoidmlzaGFsZHMiLCJhIjoiY2x1YXRrdnpzMGw5aDJucWs4enpkamdsZCJ9.eCkROwVcGTpatN-PKhQ86w';
 
 export default function Map({ date }) {
+
     const mapContainer = useRef(null);
     const map = useRef(null);
+    const [drives, setDrives] = useState([])
 
     useEffect(() => {
         if (map.current) return; // initialize map only once
