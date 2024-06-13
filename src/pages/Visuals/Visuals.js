@@ -6,6 +6,9 @@ import Loader from '../../assets/components/loader'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
 import WarningIcon from '@mui/icons-material/Warning';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import './styles.css';
 
 const DatePicker = ({ position, onSelect, date }) => {
@@ -81,15 +84,31 @@ const Visuals = () => {
             <div className='icon'>{status.icon}</div>
             <div className="text">{status.message}</div>
         </div>
+        <div title='Switch device' className='switch'>
+            <SwapHorizIcon className='icon' />
+        </div>
         <div className="controls">
             <div className="top">
                 <div className="border"></div>
                 <DatePicker key={0} position={'from'} onSelect={setDate} date={date} />
+                <div className='button'>
+                    <button>View all routes</button>
+                </div>
                 <DatePicker key={1} position={'to'} onSelect={setDate} date={date} />
                 <div className="border"></div>
             </div>
             <div className="bottom">
-                <button>change account</button>
+                <div className='route'>
+                    <div className='control previous'>
+                        <ChevronLeftIcon fontSize='large' />
+                    </div>
+                    <div className='metadata'>
+                        <p>Saturday June 12, 2023</p>
+                    </div>
+                    <div className='control next'>
+                        <ChevronRightIcon fontSize='large' />
+                    </div>
+                </div>
                 <div className="legend">
                     <p className="marker" style={{ color: 'blue' }}>-</p>
                     <p>human</p>

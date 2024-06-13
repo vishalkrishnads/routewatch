@@ -1,194 +1,313 @@
 body {
-    background-color: var(--background-color);
-    color: var(--text-color);
-    height: 100vh;
-    width: 100vw;
-    margin: 0px;
-    display: flex;
-    flex-direction: column;
-    font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  height: 100vh;
+  width: 100vw;
+  margin: 0px;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.map {
+  height: 100vh;
+  width: 100vw;
+}
+
+.status {
+  z-index: 2;
+  position: fixed;
+  bottom: 30vh;
+  left: 35vw;
+  width: 30vw;
+  height: 7vh;
+  border-radius: 50px;
+  background-color: var(--background-color);
+  box-shadow: 0px 0px var(--shadow) grey;
+  display: flex;
+}
+
+@keyframes popUp {
+  0% {
+    transform: scale(0);
+    opacity: 0;
   }
 
-  .map {
-    height: 100vh;
-    width: 100vw;
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
   }
-  
-  .status {
-    z-index: 2;
-    position: fixed;
-    bottom: 30vh;
-    left: 35vw;
-    width: 30vw;
-    height: 7vh;
-    border-radius: 50px;
-    background-color: var(--background-color);
-    box-shadow: 0px 0px var(--shadow) grey;
-    display: flex; 
+
+  100% {
+    transform: scale(1);
+  }
 }
-  
-  @keyframes popUp {
-    0% {
-      transform: scale(0);
-      opacity: 0;
-    }
-    50% {
-      transform: scale(1.1);
-      opacity: 1;
-    }
-    100% {
-      transform: scale(1);
-    }
+
+@keyframes popDown {
+  0% {
+    transform: scale(1);
+    opacity: 1;
   }
-  
-  @keyframes popDown {
-    0% {
-      transform: scale(1);
-      opacity: 1;
-    }
-    50% {
-      transform: scale(1.1);
-      opacity: 0;
-    }
-    100% {
-      transform: scale(0);
-      opacity: 0;
-    }
+
+  50% {
+    transform: scale(1.1);
+    opacity: 0;
   }
-  
-  .pop-up {
-    animation: popUp 0.5s ease forwards;
+
+  100% {
+    transform: scale(0);
+    opacity: 0;
   }
-  
-  .pop-down {
-    animation: popDown 0.5s ease forwards;
+}
+
+.pop-up {
+  animation: popUp 0.5s ease forwards;
+}
+
+.pop-down {
+  animation: popDown 0.5s ease forwards;
+}
+
+.status .icon {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.status .text {
+  display: flex;
+  align-items: center;
+}
+
+.status .text {
+  flex: 10;
+}
+
+.switch {
+  z-index: 2;
+  position: fixed;
+  bottom: 80vh;
+  left: 90vw;
+  width: 80px;
+  height: 80px;
+  border-radius: 50px;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.5s ease-in-out;
+}
+
+.switch:hover {
+  transform: rotate(180deg);
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
   }
-  
-  .status .icon {
-    flex: 2;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
+  to {
+    transform: rotate(360deg);
   }
-  
-  .status .text {
-    display: flex;
-    align-items: center;
-  }
-  
-  .status .text {
-    flex: 10;
-  }
-  
-  .controls {
-    z-index: 2;
-    position: fixed;
-    bottom: 5vh;
-    left: 5vw;
-    width: 90vw;
-    height: 20vh;
-    border-radius: 20px;
-    background-color: var(--background-color);
-    box-shadow: 0px 0px var(--shadow) grey;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .controls .top {
-    flex: 2;
-    display: flex;
-  }
-  
-  .top .border {
-    flex: 1;
-  }
-  
-  .top .date {
-    flex: 2;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-  }
-  
-  .top .to {
-    align-items: flex-end;
-  }
-  
-  .top .date p {
-    font-size: 15px;
-  }
-  
+}
+
+.switch .icon {
+  font-size: 40px;
+}
+
+.controls {
+  z-index: 2;
+  position: fixed;
+  bottom: 5vh;
+  left: 5vw;
+  width: 90vw;
+  height: 25vh;
+  border-radius: 20px;
+  background-color: var(--background-color);
+  box-shadow: 0px 0px var(--shadow) grey;
+  display: flex;
+  flex-direction: column;
+}
+
+.controls .top {
+  flex: 2;
+  display: flex;
+}
+
+.top .border {
+  flex: 1;
+}
+
+.top .button {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.controls .top button {
+  padding: 10px 20px 10px 20px;
+  background-color: inherit;
+  color: inherit;
+  border: 1px solid var(--text-color);
+  border-radius: 50px;
+  font-size: 20px;
+  font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.controls .top button:hover {
+  cursor: pointer;
+  background-color: var(--text-color);
+  color: var(--background-color);
+}
+
+.top .date {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.top .to {
+  align-items: flex-end;
+}
+
+.top .date p {
+  font-size: 15px;
+}
+
+.top .date .value {
+  width: 55%;
+  border: 0px;
+  font-size: 20px;
+  font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  border-radius: 10px;
+}
+
+.top .date p {
+  margin-block: 0em;
+}
+
+.controls .bottom {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.controls .bottom .route {
+  height: 90%;
+  width: 100%;
+  display: flex;
+}
+
+.controls .bottom .route .control {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.controls .bottom .route .previous {
+  justify-content: flex-end;
+}
+
+.controls .bottom .route .metadata {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.controls .bottom .route .metadata p {
+  font-size: 25px;
+  text-align: center;
+}
+
+.controls .bottom .legend {
+  width: 100%;
+  height: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.controls .bottom .legend .marker {
+  font-size: 30px;
+  font-weight: bold;
+  margin-block: 0em;
+}
+
+.controls .bottom .legend p {
+  margin-block: 0em;
+}
+
+.controls .bottom .footer p {
+  margin-block: 0em;
+  font-size: 10px;
+}
+
+@media only screen and (max-width: 1700px) {
   .top .date .value {
-    width: 35%;
-    border: 0px;
-    font-size: 20px;
-    font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    border-radius: 10px;
+    width: 70%;
   }
-  
-  .top .date p {
-    margin-block: 0em;
+}
+
+@media only screen and (max-width: 1200px) {
+  .top .date .value {
+    width: 80%;
   }
-  
-  .controls .bottom {
-    flex: 2;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
+}
+
+@media only screen and (max-width: 1000px) {
+  .top .date .value {
+    width: 90%
   }
-  
-  .controls .bottom button {
-    padding: 10px 20px 10px 20px;
-    background-color: inherit;
-    color: inherit;
-    border: 1px solid var(--text-color);
-    border-radius: 50px;
-    font-size: 25px;
+
+  .top .button {
+    display: none;
   }
-  
-  .controls .bottom button:hover {
-    cursor: pointer;
-    background-color: var(--text-color);
-    color: var(--background-color);
+}
+
+@media only screen and (max-width: 800px) {
+  .switch {
+    left: 80vw;
   }
-  
-  .controls .bottom .legend {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
+  .controls .bottom .route .metadata {
+    flex: 4;
   }
-  
-  .controls .bottom .legend .marker {
-    font-size: 30px;
-    font-weight: bold;
-    margin-block: 0em;
+}
+
+@media only screen and (max-width: 700px) {
+  .top .date .value {
+    width: 95%;
   }
-  
-  .controls .bottom .legend p {
-    margin-block: 0em;
+}
+
+@media only screen and (max-width: 500px) {
+  .top .date {
+    width: 40%;
   }
-  
-  .controls .bottom .footer p {
-    margin-block: 0em;
-    font-size: 10px;
+
+  .top .date .value {
+    width: 80%;
   }
-  
-  @media only screen and (max-width: 1200px) {
-    .top .date .value {
-      width: 60%;
-    }
+
+  .top .button {
+    flex: 0;
   }
-  
-  @media only screen and (max-width: 1000px) {
-    .top .date .value {
-      width: 70%
-    }
+
+  .switch {
+    width: 70px;
+    height: 70px;
+    left: 75vw;
   }
-  
-  @media only screen and (max-width: 700px) {
-    .top .date .value {
-      width: 80%;
-    }
+
+  .switch .icon {
+    font-size: 35px;
   }
+}
