@@ -19,6 +19,7 @@ function App() {
       navigate(CONFIGS.ROUTES.DEVICE);
     }
     else navigate(CONFIGS.ROUTES.ACCOUNT);
+    // eslint-disable-next-line
   }, [])
 
   return (

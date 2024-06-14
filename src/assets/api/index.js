@@ -18,6 +18,7 @@ export async function getRoutes(date) {
     try {
         let segments = await drives.getRoutesSegments(id, date.from, date.to);
 
+        // eslint-disable-next-line
         if (segments == []) return [];
 
         // fix up the routes

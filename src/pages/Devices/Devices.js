@@ -57,6 +57,7 @@ const Devices = () => {
                     setStatus('');
                 }).catch(() => setDevices(getDevices()))
         }
+        // eslint-disable-next-line
     }, [])
 
     return <div className="body">

@@ -54,6 +54,7 @@ const Visuals = () => {
 
     useEffect(() => {
         if (!hasAccount()) navigate(CONFIGS.ROUTES.ACCOUNT);
+        // eslint-disable-next-line
     }, [])
 
     const toast = (message = '', icon = 'working') => {
