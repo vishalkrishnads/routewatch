@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "routewatch",
+  "name": "know when you & openpilot drove",
   "icons": [
     {
       "src": "favicon.ico",
