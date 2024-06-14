@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/routewatch/static/css/main.511d2b72.css",
+    "main.js": "/routewatch/static/js/main.2d2a2d1f.js",
+    "static/js/453.1f1a6823.chunk.js": "/routewatch/static/js/453.1f1a6823.chunk.js",
+    "index.html": "/routewatch/index.html",
+    "main.511d2b72.css.map": "/routewatch/static/css/main.511d2b72.css.map",
+    "main.2d2a2d1f.js.map": "/routewatch/static/js/main.2d2a2d1f.js.map",
+    "453.1f1a6823.chunk.js.map": "/routewatch/static/js/453.1f1a6823.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.511d2b72.css",
+    "static/js/main.2d2a2d1f.js"
+  ]
+}
