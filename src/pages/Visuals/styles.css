@@ -17,7 +17,7 @@ body {
 .status {
   z-index: 2;
   position: fixed;
-  bottom: 30vh;
+  bottom: 32vh;
   left: 35vw;
   width: 30vw;
   height: 7vh;
@@ -209,6 +209,20 @@ body {
   flex: 1;
   display: flex;
   align-items: center;
+}
+
+.controls .bottom .route .control .button {
+  width: 55px;
+  height: 55px;
+  border-radius: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.controls .bottom .route .control .button:hover {
+  background-color: var(--text-color);
+  color: var(--background-color);
 }
 
 .controls .bottom .route .previous {
