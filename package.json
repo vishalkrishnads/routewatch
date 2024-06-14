@@ -1,6 +1,7 @@
 {
   "name": "routewatch",
   "version": "0.1.0",
+  "homepage": "https://vishalkrishnads.github.io/routewatch",
   "private": true,
   "dependencies": {
     "@commaai/api": "commaai/comma-api",
