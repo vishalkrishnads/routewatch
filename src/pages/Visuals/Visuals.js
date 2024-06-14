@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { hasAccount } from '../../assets/db';
 import { getRoutes } from '../../assets/api';
-import Map from '../../assets/components/map'
-import Loader from '../../assets/components/loader'
+import { CONFIGS } from '../../assets/config';
+import Map from '../../assets/components/map';
+import Loader from '../../assets/components/loader';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
 import WarningIcon from '@mui/icons-material/Warning';
@@ -44,15 +45,15 @@ const DatePicker = ({ position, onSelect, date }) => {
 const Visuals = () => {
 
     const [status, setStatus] = useState({ message: '', icon: <Loader /> });
-    const [popClass, setPop] = useState('')
-    const [date, setDate] = useState({ from: null, to: null })
+    const [popClass, setPop] = useState('');
+    const [date, setDate] = useState({ from: null, to: null });
     const [isIndividual, setIndividual] = useState(true);
-    const [drives, setDrives] = useState([])
-    const [drive, setDrive] = useState(0)
+    const [drives, setDrives] = useState([]);
+    const [drive, setDrive] = useState(0);
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!hasAccount()) navigate('/account')
+        if (!hasAccount()) navigate(CONFIGS.ROUTES.ACCOUNT);
     }, [])
 
     const toast = (message = '', icon = 'working') => {
@@ -86,17 +87,17 @@ const Visuals = () => {
         async function refresh() {
             if (date.from && date.to) {
                 try {
-                    toast('Fetching your drives...', 'working')
+                    toast('Fetching your drives...', 'working');
                     let routes = await getRoutes(date);
-                    setDrive(0)
-                    setDrives(routes)
-                    toast('There you go!', 'success')
-                } catch (e) { toast(e.message, 'error') }
+                    setDrive(0);
+                    setDrives(routes);
+                    toast('There you go!', 'success');
+                } catch (e) { toast(e.message, 'error'); }
                 setTimeout(() => toast(), 1000);
             }
         }
 
-        refresh()
+        refresh();
     }, [date])
 
     function formatDate(isoDateString) {
@@ -117,7 +118,7 @@ const Visuals = () => {
             <div className='icon'>{status.icon}</div>
             <div className="text">{status.message}</div>
         </div>
-        <div title='Switch device' className='switch'>
+        <div onClick={() => navigate(CONFIGS.ROUTES.DEVICE)} title='Switch device' className='switch'>
             <SwapHorizIcon className='icon' />
         </div>
         <div className="controls">

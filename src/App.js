@@ -7,6 +7,7 @@ import Accounts from './pages/Account/Account';
 import Devices from './pages/Devices/Devices';
 import Visuals from './pages/Visuals/Visuals';
 import { getAccount, hasAccount } from './assets/db';
+import { CONFIGS } from './assets/config';
 
 function App() {
 
@@ -14,10 +15,10 @@ function App() {
 
   useEffect(() => {
     if (hasAccount()) {
-      request.configure(getAccount().token)
-      navigate('/device')
+      request.configure(getAccount().token);
+      navigate(CONFIGS.ROUTES.DEVICE);
     }
-    else navigate('/account')
+    else navigate(CONFIGS.ROUTES.ACCOUNT);
   }, [])
 
   return (

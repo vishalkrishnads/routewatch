@@ -1,8 +1,9 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
 import { getDevice } from '../../db';
+import { CONFIGS } from '../../config';
 
-mapboxgl.accessToken = 'pk.eyJ1IjoidmlzaGFsZHMiLCJhIjoiY2x1YXRrdnpzMGw5aDJucWs4enpkamdsZCJ9.eCkROwVcGTpatN-PKhQ86w';
+mapboxgl.accessToken = CONFIGS.MAPBOX;
 
 export default function Map({ routes }) {
 
@@ -11,7 +12,7 @@ export default function Map({ routes }) {
     const layers = useRef([]);
 
     useEffect(() => {
-        if (map.current) return; // initialize map only once
+        if (map.current) return;
 
         try {
             const { coords } = getDevice();
@@ -26,7 +27,7 @@ export default function Map({ routes }) {
         const themeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
         const changeTheme = (e) => {
             const newTheme = e.matches ? 'dark' : 'light';
-            map.current.setStyle(`mapbox://styles/mapbox/${newTheme}-v11`)
+            map.current.setStyle(`mapbox://styles/mapbox/${newTheme}-v11`);
         };
 
         changeTheme(themeMediaQuery);
@@ -40,14 +41,14 @@ export default function Map({ routes }) {
             for (let i = 0; i < item; i++) {
                 const engagement = `engagement-${index}-${i}`;
                 if (map.current.getLayer(engagement)) {
-                    map.current.removeLayer(engagement)
-                    map.current.removeSource(engagement)
+                    map.current.removeLayer(engagement);
+                    map.current.removeSource(engagement);
                 }
             }
             const route = `route-${index}`
             if (map.current.getLayer(route)) {
-                map.current.removeLayer(route)
-                map.current.removeSource(route)
+                map.current.removeLayer(route);
+                map.current.removeSource(route);
             }
         })
 
@@ -108,7 +109,7 @@ export default function Map({ routes }) {
 
         engagements.forEach((item, index) => {
             addSource(`engagement-${id}-${index}`, item);
-            addLayer(`engagement-${id}-${index}`, 'green')
+            addLayer(`engagement-${id}-${index}`, 'green');
         })
 
         map.current.flyTo({
@@ -123,7 +124,6 @@ export default function Map({ routes }) {
     useEffect(() => {
         clear();
         if (routes && routes.length > 0) {
-            console.log(routes)
             routes.forEach((item, index) => {
                 drawRoute(item, index);
             })

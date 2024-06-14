@@ -4,11 +4,11 @@ import { get } from './network';
 import { annotateCoords, parseEvents } from './utils';
 
 function getEvents(url, index) {
-    return get(`${url}/${index}/events.json`)
+    return get(`${url}/${index}/events.json`);
 }
 
 function getCoords(url, index) {
-    return get(`${url}/${index}/coords.json`)
+    return get(`${url}/${index}/coords.json`);
 }
 
 export async function getRoutes(date) {
@@ -18,7 +18,7 @@ export async function getRoutes(date) {
     try {
         let segments = await drives.getRoutesSegments(id, date.from, date.to);
 
-        if (segments == []) return []
+        if (segments == []) return [];
 
         // fix up the routes
         // taken straight from comma connect

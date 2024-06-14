@@ -7,7 +7,7 @@ export function get(url, headers = {}) {
             .then(res => res.json())
             .then(res => resolve(res))
             .catch(error => reject(error))
-    })
+    });
 }
 
 export function post(url, body = {}, headers = {}) {
@@ -20,5 +20,5 @@ export function post(url, body = {}, headers = {}) {
             .then(res => res.json())
             .then(res => resolve(res))
             .catch(error => reject(error))
-    })
+    });
 }
