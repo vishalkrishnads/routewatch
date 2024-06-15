@@ -1,3 +1,9 @@
+/*
+    I didn't feel the need for any overkill using Redux or contexts for managing global states in this project.
+    So, here we are with window.localStorage & window.sessionStroage.
+    These are just utility functions for managing the app's global data.
+*/
+
 export function hasAccount() {
     return localStorage.getItem('creds') != null;
 }

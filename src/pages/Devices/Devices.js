@@ -1,3 +1,13 @@
+/*
+    Device selection page that lets users select from one of their paried comma devices.
+    This page includes logic for:
+        * switching user account
+        * fetching and displaying a list of paired devices from /v1/me/devices
+        * handling device selection
+    Once a user has logged in, this page will be loaded on subsequent visits.
+    If this detects that the account has been removed, it redirects to the account selection page
+*/
+
 import { useEffect, useState } from "react";
 import { devices } from "@commaai/api";
 import { useNavigate } from "react-router-dom";

@@ -114,6 +114,9 @@ export function parseEvents(route, driveEvents) {
     return res;
 }
 
+// utility function to annotate the gps path with driving state
+// it takes in as args the path and events, and for every path point between the start & end time of an engage event,
+// annotates that gps path with status engaged, so that the map can simply plot the data.
 export function annotateCoords(coords, events) {
     for (const event of events) {
         const start = Math.round(event.route_offset_millis / 1000), end = Math.round(event.data.end_route_offset_millis / 1000);

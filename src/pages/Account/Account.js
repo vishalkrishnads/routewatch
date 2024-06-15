@@ -1,3 +1,10 @@
+/*
+    Account selection page that lets users either:
+        * login with an account token from https://jwt.comma.ai/
+        * Use the demo account with the token provided in the challenge at https://github.com/commaai/jobs/blob/master/web.md
+    Includes logic for fetching an account from the /v1/me route and storing it in the browser's localStorage.
+*/
+
 import { useState } from 'react';
 import { account, request } from '@commaai/api';
 import { useNavigate } from 'react-router-dom';
@@ -15,11 +22,15 @@ const Accounts = () => {
     const navigate = useNavigate();
 
     const login = (loginToken) => {
+        // configure ConfigRequest with the new token
         request.configure(loginToken)
         setStatus('authenticating, please wait...');
+        // get profile details from /v1/me
         account.getProfile()
             .then(res => {
+                // store the account details locally.
                 addAccount(loginToken, res.username)
+                // for now, set the devices list to be empty, the devices page will take care of the rest.
                 addDevices([])
                 navigate('/device')
             }).catch(error => {

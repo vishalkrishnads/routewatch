@@ -4,6 +4,7 @@ const Greeting = ({ head, caption }) => {
     
     const [isDark, setTheme] = useState(true);
 
+    // a listener for changing the logo according to the device theme
     useEffect(() => {
         const themeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
         const changeTheme = (e) => {

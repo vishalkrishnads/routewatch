@@ -13,8 +13,12 @@ function App() {
 
   const navigate = useNavigate();
 
+  // check if the user has already logged in with an account.
+  // if so, redirect to the device selection page, otherwise show the account login page
   useEffect(() => {
     if (hasAccount()) {
+      // configure ConfigReuqest with the token.
+      // the token might expire in 90 days, that hasn't been handled here. this is a minimal implementation.
       request.configure(getAccount().token);
       navigate(CONFIGS.ROUTES.DEVICE);
     }
