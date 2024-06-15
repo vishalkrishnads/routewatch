@@ -1,3 +1,12 @@
+/*
+    The visualization page which lets users choose a date range and displays the route visualizations.
+    This page includes logic for:
+        * validating the dates and prompting the api
+        * sorting data as requested by the user, ie, displaying individual routes or combined visualizations
+        * displaying current operation status to the user
+    This page is displayed as the default route. So, it also includes validation logic for checking if the user has logged in.
+*/
+
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { hasAccount } from '../../assets/db';
@@ -19,9 +28,10 @@ const DatePicker = ({ position, onSelect, date }) => {
     const handleDateChange = (event) => {
         const newDateValue = event.target.value;
 
+        // extract the date from the ISO string
         setSelectedDate(newDateValue.split('T')[0]);
-
         if (newDateValue) {
+            // and get time since last unix epoch
             const dateUTCString = new Date(newDateValue).getTime();
             onSelect(position === 'from' ? { ...date, from: dateUTCString } : { ...date, to: dateUTCString });
         } else {
@@ -53,10 +63,13 @@ const Visuals = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        // validate whether user has logged in
         if (!hasAccount()) navigate(CONFIGS.ROUTES.ACCOUNT);
         // eslint-disable-next-line
     }, [])
 
+    // utility function for displaying a popup toast message
+    // once done, simply invoke toast() to hide
     const toast = (message = '', icon = 'working') => {
         const icons = {
             'success': <CheckCircleIcon />,
@@ -66,16 +79,17 @@ const Visuals = () => {
         }
 
         const show = () => {
-            setPop('pop-up');
-            setStatus({ message, icon: icons[icon] });
+            setPop('pop-up'); // add class name for animation
+            setStatus({ message, icon: icons[icon] }); // show the toast
         }
 
         const hide = () => {
-            setPop('pop-down');
+            setPop('pop-down'); // set fade out animation class
             setStatus({ message: '', icon: <Loader /> });
-            setTimeout(() => setPop(''), 1000)
+            setTimeout(() => setPop(''), 1000) // wait a second and remove the animation class
         }
 
+        // if no message, then the user has invoked toast(), so hide
         if (!message) {
             hide();
             return;
@@ -89,8 +103,11 @@ const Visuals = () => {
             if (date.from && date.to) {
                 try {
                     toast('Fetching your drives...', 'working');
+                    // get the routes for the specified date range
                     let routes = await getRoutes(date);
+                    // set the display to the first route
                     setDrive(0);
+                    // and keep the routes in memory
                     setDrives(routes);
                     toast('There you go!', 'success');
                 } catch (e) { toast(e.message, 'error'); }
@@ -101,6 +118,7 @@ const Visuals = () => {
         refresh();
     }, [date])
 
+    // utility function to format a date in ISO to a human readable one
     function formatDate(isoDateString) {
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         const date = new Date(isoDateString);

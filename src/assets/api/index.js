@@ -1,12 +1,18 @@
+/*
+    All the API's exposed as JavaScript methods for the UI.
+*/
+
 import { drives } from '@commaai/api';
 import { getDevice } from '../db';
 import { get } from './network';
 import { annotateCoords, parseEvents } from './utils';
 
+// utility function to get the drive events
 function getEvents(url, index) {
     return get(`${url}/${index}/events.json`);
 }
 
+// utility function to get the GPS path
 function getCoords(url, index) {
     return get(`${url}/${index}/coords.json`);
 }
@@ -47,10 +53,13 @@ export async function getRoutes(date) {
             let driveEvents, coords;
             const eventPromises = [], coordsPromises = [];
 
+            // for each route driven,
             for (let i = 0; i <= route.maxqlog; i++) {
+                // get all the events that happened
                 eventPromises.push((async (j) => {
                     return await getEvents(route.url, j);
                 })(i));
+                // and the gps path
                 coordsPromises.push((async (j) => {
                     return await getCoords(route.url, j);
                 })(i));
@@ -64,7 +73,10 @@ export async function getRoutes(date) {
                 return [];
             }
 
+            // parse the events using the function copied from comma connect
+            // and filter out only the engagement events
             driveEvents = parseEvents(route, driveEvents).filter(event => event.type === 'engage');
+            // include the date of the drive and the annotated coords
             return { date: route.start_time, coords: annotateCoords(coords, driveEvents) };
         })
 
