@@ -110,26 +110,22 @@ export default function Map({ routes }) {
         addLayer(`route-${id}`, '#0000ff');
 
         // create a list of engagements from the supplied route
-        let engagements = [], engagement = [];
+        let index = 0, engagement = [];
         for (let i = 0; i < route.length; i++) {
             // if this part was engaged, then add it to the current engagement
             if ('status' in route[i] && route[i].status === 'engaged') {
                 engagement.push([route[i].lng, route[i].lat]);
             }
-            // if the next one is not, then mark this engagement as done and push it
+            // if the next one is not, then mark this engagement as done and plot it
             if (i === route.length - 1 || !('status' in route[i + 1])) {
                 if (engagement.length > 0) {
-                    engagements.push(engagement);
+                    addSource(`engagement-${id}-${index}`, engagement);
+                    addLayer(`engagement-${id}-${index}`, 'green');
                     engagement = [];
+                    index++;
                 }
             }
         }
-
-        // add all the engagements
-        engagements.forEach((item, index) => {
-            addSource(`engagement-${id}-${index}`, item);
-            addLayer(`engagement-${id}-${index}`, 'green');
-        })
 
         // and fly the map to the first coordinate
         map.current.flyTo({
@@ -139,7 +135,7 @@ export default function Map({ routes }) {
         })
 
         // mark this layer for clearing in the future
-        layers.current.push(engagements.length);
+        layers.current.push(index);
     };
 
     useEffect(() => {
