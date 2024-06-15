@@ -14,6 +14,87 @@ body {
   width: 100vw;
 }
 
+.modal {
+  z-index: 3;
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  height: 100vh;
+  width: 100vw;
+}
+
+.content {
+  z-index: 4;
+  position: fixed;
+  bottom: 32vh;
+  left: 27vw;
+  width: 45vw;
+  height: 50vh;
+  border-radius: 50px;
+  background-color: var(--background-color);
+  display: flex;
+  flex-direction: column;
+}
+
+.content .header {
+  width: 100%;
+  flex: 1.5;
+  display: flex;
+  flex-direction: row;
+}
+
+.content .header .title {
+  flex: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.content .header .action {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.content .header .action .button {
+  padding: 10px 15px 10px 15px;
+  border-radius: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.content .header .action .button:hover {
+  background-color: var(--text-color);
+  color: var(--background-color)
+}
+
+.content .image {
+  width: 100%;
+  flex: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.content .image img {
+  width: 60%;
+  height: 90%;
+  border-radius: 20px;
+}
+
+.content .footer {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+}
+
+.content .footer p {
+  margin-left: 5px;
+}
+
 .status {
   z-index: 2;
   position: fixed;
@@ -268,15 +349,28 @@ body {
   .top .date .value {
     width: 70%;
   }
+
+  .content .image img {
+    width: 80%;
+  }
 }
 
 @media only screen and (max-width: 1200px) {
+  .content {
+    width: 60vw;
+    left: 20vw;
+  }
   .top .date .value {
     width: 80%;
   }
 }
 
 @media only screen and (max-width: 1000px) {
+  .content {
+    width: 65vw;
+    left: 17vw;
+  }
+
   .top .date .value {
     width: 90%
   }
@@ -288,7 +382,7 @@ body {
 
 @media only screen and (max-width: 800px) {
   .switch {
-    left: 80vw;
+    left: 85vw;
   }
 
   .controls .bottom .route .metadata {
@@ -303,6 +397,17 @@ body {
 }
 
 @media only screen and (max-width: 500px) {
+
+  .content {
+    height: 40vh;
+    width: 90vw;
+    left: 5vw;
+  }
+
+  .content .header .action {
+    justify-content: flex-start;
+  }
+
   .top .date {
     width: 40%;
   }
