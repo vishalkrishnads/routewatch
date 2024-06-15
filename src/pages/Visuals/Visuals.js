@@ -9,7 +9,7 @@
 
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { hasAccount } from '../../assets/db';
+import { getAccount, hasAccount } from '../../assets/db';
 import { getRoutes } from '../../assets/api';
 import { CONFIGS } from '../../assets/config';
 import Map from '../../assets/components/map';
@@ -39,14 +39,20 @@ const DatePicker = ({ position, onSelect, date }) => {
         }
     };
 
+    useEffect(() => {
+        const timestamp = position === 'from' ? date.from : date.to;
+        setSelectedDate(new Date(timestamp).toISOString().split('T')[0]);
+        // eslint-disable-next-line
+    }, [date])
+
     return (
         <div className={`date ${position}`}>
             <p>{position}</p>
             <input
                 className="value"
                 type="date"
-                value={selectedDate} // Controlled component
-                onChange={handleDateChange} // Handle date changes
+                value={selectedDate}
+                onChange={handleDateChange}
             />
         </div>
     );
@@ -65,6 +71,8 @@ const Visuals = () => {
     useEffect(() => {
         // validate whether user has logged in
         if (!hasAccount()) navigate(CONFIGS.ROUTES.ACCOUNT);
+        // set dates to default dates if it's the default account
+        if (getAccount().token === CONFIGS.DEFAULT_ACCOUNT.TOKEN) setDate({ from: CONFIGS.DEFAULT_ACCOUNT.DATES.START, to: CONFIGS.DEFAULT_ACCOUNT.DATES.END })
         // eslint-disable-next-line
     }, [])
 
@@ -109,7 +117,8 @@ const Visuals = () => {
                     setDrive(0);
                     // and keep the routes in memory
                     setDrives(routes);
-                    toast('There you go!', 'success');
+                    if (routes.length > 0) toast('There you go!', 'success');
+                    else toast('No drives in these dates.', 'warning')
                 } catch (e) { toast(e.message, 'error'); }
                 setTimeout(() => toast(), 1000);
             }
