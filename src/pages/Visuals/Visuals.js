@@ -71,7 +71,7 @@ const Visuals = () => {
         // validate whether user has logged in
         if (!hasAccount()) navigate(CONFIGS.ROUTES.ACCOUNT);
         // set dates to default dates if it's the default account
-        if (getAccount().token === CONFIGS.DEFAULT_ACCOUNT) setDate({ from: 1686528000000, to: 1718236800000 })
+        if (getAccount().token === CONFIGS.DEFAULT_ACCOUNT.TOKEN) setDate({ from: CONFIGS.DEFAULT_ACCOUNT.DATES.START, to: CONFIGS.DEFAULT_ACCOUNT.DATES.END })
         // eslint-disable-next-line
     }, [])
 

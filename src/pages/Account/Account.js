@@ -59,7 +59,7 @@ const Accounts = () => {
                     {token ? <KeyboardDoubleArrowRightIcon onClick={() => login(token)} className='icon' /> : null}
                 </div>
                 <button
-                    onClick={() => login(CONFIGS.DEFAULT_ACCOUNT)}
+                    onClick={() => login(CONFIGS.DEFAULT_ACCOUNT.TOKEN)}
                 >Continue with demo account</button>
             </div>}
         <div className="border footer">
