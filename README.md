@@ -1,3 +1,4 @@
+<img src="https://github.com/vishalkrishnads/routewatch/assets/50231856/a4d3dd70-9c0c-462a-8511-0e384ef45264" alt="comma.ai" width="200" align="right" >
 
 # `routewatch` 🗺️
 A web app that allows a comma device user to visualize their openpilot usage in an intuitive manner. I mean, what better intuition is there than to show them where they drove vs where openpilot drove! So, this website visualizes a user's openpilot usage with their driving routes. View the website [here](https://vishalkrishnads.github.io/routewatch). Don't have a comma device? That's okay, just use the demo account.
