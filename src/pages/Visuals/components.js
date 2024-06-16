@@ -21,7 +21,7 @@ export const DatePicker = ({ position, onSelect, date }) => {
 
     useEffect(() => {
         const timestamp = position === 'from' ? date.from : date.to;
-        setSelectedDate(new Date(timestamp).toISOString().split('T')[0]);
+        if(timestamp) setSelectedDate(new Date(timestamp).toISOString().split('T')[0]);
         // eslint-disable-next-line
     }, [date])
 

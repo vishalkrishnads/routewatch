@@ -92,7 +92,7 @@ const Visuals = () => {
                     else toast('No drives in these dates.', 'warning')
                 } catch (e) { toast(e.message, 'error'); }
                 setTimeout(() => toast(), 1000);
-            }
+            } else setDrives([])
         }
 
         refresh();
@@ -146,7 +146,7 @@ const Visuals = () => {
                 </div> :
                     <div className='route'>
                         <div className='metadata'>
-                            <p>select a date range to see your routes</p>
+                            <p>select a valid date range to see your routes</p>
                         </div>
                     </div>}
                 {drives.length > 0 && <div className="legend">
