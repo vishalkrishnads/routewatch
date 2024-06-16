@@ -118,10 +118,14 @@ export function parseEvents(route, driveEvents) {
 // it takes in as args the path and events, and for every path point between the start & end time of an engage event,
 // annotates that gps path with status engaged, so that the map can simply plot the data.
 export function annotateCoords(coords, events) {
+    let parsedCoords = []
+    coords.forEach((item, index) => {
+        item.forEach(coord => parsedCoords.push({ ...coord, segment: index }))
+    })
     for (const event of events) {
         const start = Math.round(event.route_offset_millis / 1000), end = Math.round(event.data.end_route_offset_millis / 1000);
         if (start && end) {
-            coords.forEach(obj => {
+            parsedCoords.forEach(obj => {
                 if (obj.t >= start && obj.t <= end) {
                     obj.status = 'engaged';
                 }
@@ -129,5 +133,5 @@ export function annotateCoords(coords, events) {
         }
     }
 
-    return coords;
+    return parsedCoords;
 }

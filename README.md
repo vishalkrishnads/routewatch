@@ -1,7 +1,7 @@
 <img src="https://github.com/vishalkrishnads/routewatch/assets/50231856/a4d3dd70-9c0c-462a-8511-0e384ef45264" alt="comma.ai" width="200" align="right" >
 
 # `routewatch` 🗺️
-A web app that allows a comma device user to visualize their openpilot usage in an intuitive manner. I mean, what better intuition is there than to show them where they drove vs where openpilot drove! So, this website visualizes a user's openpilot usage with their driving routes. View the website [here](https://vishalkrishnads.github.io/routewatch). Don't have a comma device? That's okay, just use the demo account.
+A web app that allows a comma device user to visualize their openpilot usage in an intuitive manner. I mean, what better intuition is there than to show them where they drove vs where openpilot drove? So, this website visualizes a user's openpilot usage with their driving routes. Moreover, it marks where all openpilot was disengaged during each drive, and shows some image frames captured during those moments. View the website [here](https://vishalkrishnads.github.io/routewatch). Don't have a comma device? That's okay, just use the demo account.
 
 > :warning: This is my submission of the [comma web challenge](https://github.com/commaai/jobs/blob/master/web.md) hosted by [comma.ai](https://comma.ai) and not one of my projects.
 
@@ -29,6 +29,7 @@ As I thought about it, what better data to show other than the driving statistic
 3. A single user account can have multiple devices. The user should be able to select their preferred one to view.
 4. Different drives occur at different dates. So, there needs to be a date range selector, just like in comma connect, to view the routes.
 5. Once a date range is selected, the user should be able to switch between the available drives, as well as see them individually.
+6. Along each route, any disengagement event should be highlighted. The user should be able to see the cause of disengagement.
 
 ### Constraints & Nuances
 1. No constraints have been mentioned, other than to keep the implementation simple.
@@ -51,6 +52,8 @@ I took a monotone approach for the UI, without too much colors. The visualizatio
 1. Account selection: allows you to login with a comma account, using an account token obtained from [JWT](https://jwt.comma.ai).
 2. Device selection: allows you to choose from one of your paired comma devices.
 3. The visualization: lets you choose a date range and visualize your routes.
+
+I didn't care to use tailwind or anything for the UI, to keep the implementation simple. There aren't much nested components here. So, I didn't feel the need for overcomplicating it with CSS frameworks as well.
 
 ### API & Communication
 Only data from the comma API has been used in this project. Some of the routes or responses weren't documented in the [API docs](https://github.com/commaai/comma-api/blob/master/openapi.yaml) or the [openapi.yaml](https://github.com/commaai/comma-api/blob/master/openapi.yaml) file in the `@commaai/api` module. As such, a combination of the module and JS `fetch()` has been used. Here are the API endpoints used in routewatch:
@@ -94,6 +97,14 @@ After openpilot uploads a log, a JSON array of GPS coordinates interpolated at 1
 🔗 [docs](https://api.comma.ai/#events)
 
 In each uploaded route, there will be driving events indicating when something happened. We can sense engagement and disengagement events from these events. comma connect uses this to plot the timeline in the video player, and routewatch uses the same in it's map.
+
+#### Disengagement frames
+
+> GET: `https://chffrprivate.azureedge.net/....../segment/sprite.jpg`
+
+🔗 [docs](https://api.comma.ai/#video-frames-every-5s)
+
+JPEGs are extracted every 5s from road camera video and are exposed at a signed URL in the cloud. So, at a given disengagement point, it would be enough to show the frames at that minute. I couldn't find a way to be more specific and show the frame at that exact second for now. It's sure to get complicated, so maybe that's something for later.
 
 ## Setup Guide
 If you want to view & use the application, you can simply visist the hosted version in github pages [here](https://vishalkrishnads.github.io/routewatch). But if you'd rather build & run from source, follow this guide.

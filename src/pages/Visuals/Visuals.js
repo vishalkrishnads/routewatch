@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { getAccount, hasAccount } from '../../assets/db';
 import { getRoutes } from '../../assets/api';
 import { CONFIGS } from '../../assets/config';
+import { DatePicker, DisengageFrame } from './components';
 import Map from '../../assets/components/map';
 import Loader from '../../assets/components/loader';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -22,42 +23,6 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import './styles.css';
 
-const DatePicker = ({ position, onSelect, date }) => {
-    const [selectedDate, setSelectedDate] = useState('');
-
-    const handleDateChange = (event) => {
-        const newDateValue = event.target.value;
-
-        // extract the date from the ISO string
-        setSelectedDate(newDateValue.split('T')[0]);
-        if (newDateValue) {
-            // and get time since last unix epoch
-            const dateUTCString = new Date(newDateValue).getTime();
-            onSelect(position === 'from' ? { ...date, from: dateUTCString } : { ...date, to: dateUTCString });
-        } else {
-            onSelect(position === 'from' ? { ...date, from: null } : { ...date, to: null });
-        }
-    };
-
-    useEffect(() => {
-        const timestamp = position === 'from' ? date.from : date.to;
-        setSelectedDate(new Date(timestamp).toISOString().split('T')[0]);
-        // eslint-disable-next-line
-    }, [date])
-
-    return (
-        <div className={`date ${position}`}>
-            <p>{position}</p>
-            <input
-                className="value"
-                type="date"
-                value={selectedDate}
-                onChange={handleDateChange}
-            />
-        </div>
-    );
-};
-
 const Visuals = () => {
 
     const [status, setStatus] = useState({ message: '', icon: <Loader /> });
@@ -66,6 +31,7 @@ const Visuals = () => {
     const [isIndividual, setIndividual] = useState(true);
     const [drives, setDrives] = useState([]);
     const [drive, setDrive] = useState(0);
+    const [frame, setFrame] = useState('')
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -106,6 +72,11 @@ const Visuals = () => {
         show();
     }
 
+    const showFrame = async(index, segment) => { 
+        const route = drives[index];
+        setFrame(`${route.url}/${segment}/sprite.jpg`)
+    }
+
     useEffect(() => {
         async function refresh() {
             if (date.from && date.to) {
@@ -134,14 +105,16 @@ const Visuals = () => {
         return date.toLocaleDateString('en-US', options);
     }
 
-    return <div style={{ flex: 1 }}>
+    return <div className='body'>
         <Map
             routes={
                 isIndividual ?
                     (drives.length > 0 && [drives[drive].coords])
                     : drives.map(item => item.coords)
             }
+            onMarkerClick={(index, segment) => showFrame(index, segment)}
         />
+        <DisengageFrame url={frame} onRequestClose={() => setFrame('')} />
         <div id="toast" style={{ display: popClass ? 'flex' : 'none' }} className={`status ${popClass}`}>
             <div className='icon'>{status.icon}</div>
             <div className="text">{status.message}</div>

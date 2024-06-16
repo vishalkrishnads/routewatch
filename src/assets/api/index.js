@@ -49,7 +49,7 @@ export async function getRoutes(date) {
             };
         });
 
-        const coords = routes.map(async (route) => {
+        const coords = routes.map(async (route, index) => {
             let driveEvents, coords;
             const eventPromises = [], coordsPromises = [];
 
@@ -67,7 +67,7 @@ export async function getRoutes(date) {
 
             try {
                 driveEvents = [].concat(...(await Promise.all(eventPromises)));
-                coords = (await Promise.all(coordsPromises)).flat();
+                coords = await Promise.all(coordsPromises);
             } catch (err) {
                 console.error(err);
                 return [];
@@ -77,7 +77,7 @@ export async function getRoutes(date) {
             // and filter out only the engagement events
             driveEvents = parseEvents(route, driveEvents).filter(event => event.type === 'engage');
             // include the date of the drive and the annotated coords
-            return { date: route.start_time, coords: annotateCoords(coords, driveEvents) };
+            return { date: route.start_time, url: route.url, coords: annotateCoords(coords, driveEvents) };
         })
 
         return await Promise.all(coords);

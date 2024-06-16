@@ -1,17 +1,100 @@
-body {
-  background-color: var(--background-color);
-  color: var(--text-color);
-  height: 100vh;
-  width: 100vw;
-  margin: 0px;
-  display: flex;
-  flex-direction: column;
-  font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+.body {
+  flex: 1;
 }
 
 .map {
   height: 100vh;
   width: 100vw;
+}
+
+.disengagement {
+  background-image: url('data:image/svg+xml;charset=UTF-8,<svg width="27" height="41" viewBox="0 0 27 41" xmlns="http://www.w3.org/2000/svg"><path d="M13.5,0 C20.9558441,0 27,6.04415588 27,13.5 C27,20.9558441 13.5,41 13.5,41 C13.5,41 0,20.9558441 0,13.5 C0,6.04415588 6.04415588,0 13.5,0 Z" fill="%23e74c3c"></path></svg>');
+  background-size: cover;
+  width: 27px;
+  height: 41px;
+  cursor: pointer;
+}
+
+.modal .background {
+  z-index: 3;
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  height: 100vh;
+  width: 100vw;
+}
+
+.modal .content {
+  z-index: 4;
+  position: fixed;
+  bottom: 32vh;
+  left: 27vw;
+  width: 45vw;
+  height: 50vh;
+  border-radius: 50px;
+  background-color: var(--background-color);
+  display: flex;
+  flex-direction: column;
+}
+
+.modal .content .header {
+  width: 100%;
+  flex: 1.5;
+  display: flex;
+  flex-direction: row;
+}
+
+.modal .content .header .title {
+  flex: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal .content .header .action {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal .content .header .action .button {
+  padding: 10px 15px 10px 15px;
+  border-radius: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal .content .header .action .button:hover {
+  background-color: var(--text-color);
+  color: var(--background-color)
+}
+
+.modal .content .image {
+  width: 70%;
+  flex: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: scroll;
+}
+
+.modal .content .image img {
+  width: 500vw;
+  height: 95%;
+  border-radius: 5px;
+}
+
+.modal .content .footer {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+}
+
+.modal .content .footer p {
+  margin-left: 5px;
 }
 
 .status {
@@ -271,12 +354,21 @@ body {
 }
 
 @media only screen and (max-width: 1200px) {
+  .modal .content {
+    width: 60vw;
+    left: 20vw;
+  }
   .top .date .value {
     width: 80%;
   }
 }
 
 @media only screen and (max-width: 1000px) {
+  .modal .content {
+    width: 65vw;
+    left: 17vw;
+  }
+
   .top .date .value {
     width: 90%
   }
@@ -288,7 +380,7 @@ body {
 
 @media only screen and (max-width: 800px) {
   .switch {
-    left: 80vw;
+    left: 85vw;
   }
 
   .controls .bottom .route .metadata {
@@ -303,6 +395,17 @@ body {
 }
 
 @media only screen and (max-width: 500px) {
+
+  .modal .content {
+    height: 40vh;
+    width: 90vw;
+    left: 5vw;
+  }
+
+  .modal .content .header .action {
+    justify-content: flex-start;
+  }
+
   .top .date {
     width: 40%;
   }
