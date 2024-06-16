@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/routewatch/static/css/main.818719e0.css",
-    "main.js": "/routewatch/static/js/main.9482b382.js",
+    "main.js": "/routewatch/static/js/main.eaf80f7b.js",
     "static/js/453.1f1a6823.chunk.js": "/routewatch/static/js/453.1f1a6823.chunk.js",
     "index.html": "/routewatch/index.html",
     "main.818719e0.css.map": "/routewatch/static/css/main.818719e0.css.map",
-    "main.9482b382.js.map": "/routewatch/static/js/main.9482b382.js.map",
+    "main.eaf80f7b.js.map": "/routewatch/static/js/main.eaf80f7b.js.map",
     "453.1f1a6823.chunk.js.map": "/routewatch/static/js/453.1f1a6823.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.818719e0.css",
-    "static/js/main.9482b382.js"
+    "static/js/main.eaf80f7b.js"
   ]
 }
