@@ -13,7 +13,7 @@ import { CONFIGS } from '../../config';
 
 mapboxgl.accessToken = CONFIGS.MAPBOX;
 
-export default function Map({ routes }) {
+export default function Map({ routes, onMarkerClick }) {
 
     const mapContainer = useRef(null);
     const map = useRef(null);
@@ -49,13 +49,14 @@ export default function Map({ routes }) {
         // it iterates over each element in the layers array
         layers.current.forEach((item, index) => {
             // and clears all the openpilot drive plots assoicated with the route
-            for (let i = 0; i < item; i++) {
+            for (let i = 0; i < item.index; i++) {
                 const engagement = `engagement-${index}-${i}`;
                 if (map.current.getLayer(engagement)) {
                     map.current.removeLayer(engagement);
                     map.current.removeSource(engagement);
                 }
             }
+            for(const each of item.markers) each.remove();
             //and then clears the plot of that route itself.
             const route = `route-${index}`
             if (map.current.getLayer(route)) {
@@ -110,7 +111,7 @@ export default function Map({ routes }) {
         addLayer(`route-${id}`, '#0000ff');
 
         // create a list of engagements from the supplied route
-        let index = 0, engagement = [];
+        let index = 0, engagement = [], markers = [];
         for (let i = 0; i < route.length; i++) {
             // if this part was engaged, then add it to the current engagement
             if ('status' in route[i] && route[i].status === 'engaged') {
@@ -121,6 +122,10 @@ export default function Map({ routes }) {
                 if (engagement.length > 0) {
                     addSource(`engagement-${id}-${index}`, engagement);
                     addLayer(`engagement-${id}-${index}`, 'green');
+                    const el = document.createElement('div');
+                    el.className = 'disengagement';
+                    el.addEventListener('click', () => onMarkerClick(id, route[i].segment));
+                    markers.push(new mapboxgl.Marker(el).setLngLat([route[i].lng, route[i].lat]).addTo(map.current));
                     engagement = [];
                     index++;
                 }
@@ -135,7 +140,7 @@ export default function Map({ routes }) {
         })
 
         // mark this layer for clearing in the future
-        layers.current.push(index);
+        layers.current.push({ index, markers });
     };
 
     useEffect(() => {
