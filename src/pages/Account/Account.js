@@ -41,7 +41,7 @@ const Accounts = () => {
     }
 
     return <div className='body'>
-        <div className="border"></div>
+        <div className="border" />
         {status ?
             <div className='content'>
                 <Loader info={status} />

@@ -38,10 +38,10 @@ export const DatePicker = ({ position, onSelect, date }) => {
     );
 };
 
-export const DisengageFrame = ({ display, onRequestClose }) => {
-    return <>
-        {display && <div onClick={onRequestClose} className="modal" />}
-        {display && <div className="content">
+export const DisengageFrame = ({ url, onRequestClose }) => {
+    return <div className="modal">
+        {url && <div onClick={onRequestClose} className="background" />}
+        {url && <div className="content">
             <div className="header">
                 <div className="action" />
                 <div className="title">
@@ -54,12 +54,12 @@ export const DisengageFrame = ({ display, onRequestClose }) => {
                 </div>
             </div>
             <div className="image">
-                <img src={require('../../assets/img/testimage.jpg')} alt="test" />
+                <img src={url} alt={'Frame captured closest to disengagement'} />
             </div>
             <div className="footer">
                 <InfoIcon />
-                <p>nearest available image of the event</p>
+                <p>nearest available images of the event</p>
             </div>
         </div>}
-    </>
+    </div>
 }
