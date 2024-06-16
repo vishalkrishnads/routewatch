@@ -10,7 +10,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getAccount, hasAccount } from '../../assets/db';
-import { getRoutes, getVideoFrame } from '../../assets/api';
+import { getRoutes } from '../../assets/api';
 import { CONFIGS } from '../../assets/config';
 import { DatePicker, DisengageFrame } from './components';
 import Map from '../../assets/components/map';
